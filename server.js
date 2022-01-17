@@ -52,6 +52,14 @@ function filterByQuery(query, animalsArray) {
   }
 
 
+// Function findByID
+function findById(id, animalsArray) {
+  const result = animalsArray.filter(animal => animal.id === id)[0];
+  return result;
+}
+
+
+
 // Route for animals.json. Requests and Responds in the browser
 app.get('/api/animals', (req, res) => {
     let results = animals;
@@ -60,6 +68,18 @@ app.get('/api/animals', (req, res) => {
     }
     res.json(results);
 });
+
+
+// Route with animal ID or Error 404
+app.get('/api/animals/:id', (req, res) => {
+  const result = findById(req.params.id, animals);
+  if (result) {
+    res.json(result);
+  } else {
+    res.send(404);
+  }
+});
+
 
 // Making the server listen for the port and console log it
 app.listen(PORT, () => {
